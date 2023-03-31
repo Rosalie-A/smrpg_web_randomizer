@@ -1,7 +1,7 @@
 # Data module for enemy attack data.
 
-from randomizer.logic import utils
-from randomizer.logic.patch import Patch
+from ...randomizer.logic import utils
+from ...randomizer.logic.patch import Patch
 
 
 class EnemyAttack:

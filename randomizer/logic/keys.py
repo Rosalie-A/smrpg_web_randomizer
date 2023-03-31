@@ -2,9 +2,9 @@
 
 import random
 
-import randomizer.data.items
-from randomizer.data import chests, keys
-from randomizer.data.locations import Area
+from ...randomizer.data import items as items_data
+from ...randomizer.data import chests, keys
+from ...randomizer.data.locations import Area
 from . import flags
 
 
@@ -78,7 +78,7 @@ def item_location_filter(world, location):
     return True
 
 
-def _place_items(world, items, locations, base_inventory=None):
+def _place_items(world, items, locations, ap_data, base_inventory=None):
     """Place the given list of items within the given locations, and optionally a given starting inventory.
 
     Args:
@@ -96,19 +96,25 @@ def _place_items(world, items, locations, base_inventory=None):
     if len(remaining_fill_items) > len([l for l in locations if not l.has_item]):
         raise ValueError("Trying to fill more items than available locations")
 
-    # For each required item, place it assuming we can get all other items.
-    for item in items:
-        # Get items we can get assuming we have everything but the one we're placing.
-        remaining_fill_items.remove(item)
-        assumed_items = _collect_items(world, remaining_fill_items + base_inventory)
+    for location in locations:
+        location.item = ap_data[location.name]
 
-        fillable_locations = [l for l in locations if not l.has_item and l.can_access(assumed_items)
-                              and l.item_allowed(item)]
-        if not fillable_locations:
-            raise ValueError("No available locations for {}, {}".format(item, remaining_fill_items))
+    # For each required item, place it assuming we can get all other items.
+    #for item in items:
+        # Get items we can get assuming we have everything but the one we're placing.
+    #    remaining_fill_items.remove(item)
+    #    assumed_items = _collect_items(world, remaining_fill_items + base_inventory)
+
+    #    fillable_locations = [l for l in locations if not l.has_item and l.can_access(assumed_items)
+    #                          and l.item_allowed(item)]
+        #fillable_locations = [l for l in locations if not l.has_item and l.can_access(assumed_items)
+        #                      and l.item_allowed(item)]
+
+    #    if not fillable_locations:
+    #        raise ValueError("No available locations for {}, {}".format(item, remaining_fill_items))
 
         # Place item in the first fillable location.
-        fillable_locations[0].item = item
+    #    fillable_locations[0].item = item
 
 
 
@@ -141,7 +147,7 @@ def _collect_items(world, collected=None):
     return my_items
 
 
-def randomize_all(world):
+def randomize_all(world, ap_data):
     """
 
     Args:
@@ -155,15 +161,15 @@ def randomize_all(world):
                 not world.settings.is_flag_enabled(flags.ChestIncludeKeyItems)):
             locations_to_fill = [l for l in world.key_locations if item_location_filter(world, l)]
             required_items = Inventory([l.item for l in locations_to_fill if
-                                        l.item.shuffle_type == randomizer.data.items.ItemShuffleType.Required])
+                                        l.item.shuffle_type == items_data.ItemShuffleType.Required])
             extra_items = Inventory([l.item for l in locations_to_fill if
-                                     l.item.shuffle_type == randomizer.data.items.ItemShuffleType.Extra])
+                                     l.item.shuffle_type == items_data.ItemShuffleType.Extra])
 
             # Fill in locations.
-            fill_locations(world, locations_to_fill, required_items, extra_items)
+            fill_locations(world, locations_to_fill, required_items, extra_items, ap_data=ap_data)
 
 
-def fill_locations(world, locations_to_fill, required_items, extra_items=None):
+def fill_locations(world, locations_to_fill, required_items, extra_items=None, ap_data=None):
     """Fill the given locations with the given required and extra items.
 
     Args:
@@ -171,10 +177,16 @@ def fill_locations(world, locations_to_fill, required_items, extra_items=None):
         locations_to_fill (list[randomizer.data.locations.ItemLocation]): Locations to fill.
         required_items (Inventory): Required items to place.
         extra_items (Inventory): Extra items to place.
+        ap_data (dict[str, str]): Archipelago placement data.
 
     """
     if extra_items is None:
         extra_items = Inventory()
+    if ap_data is None:
+        ap_data = dict()
+
+    required_items = []
+    extra_items = []
 
     # Sanity check to make sure we're filling the right number of spots.
     if len(locations_to_fill) < len(required_items) + len(extra_items):
@@ -189,13 +201,10 @@ def fill_locations(world, locations_to_fill, required_items, extra_items=None):
     random.shuffle(required_items)
     random.shuffle(extra_items)
 
-    # Place required items first.
-    _place_items(world, required_items, locations_to_fill)
-
     # Reverse remaining empty locations, then fill extra items.
     locations_to_fill = [l for l in locations_to_fill if not l.has_item]
     locations_to_fill.reverse()
-    _place_items(world, extra_items, locations_to_fill)
+    _place_items(world, extra_items, locations_to_fill, ap_data)
 
     # Sanity check to make sure we can collect all the items.
     collected_items = set(_collect_items(world))

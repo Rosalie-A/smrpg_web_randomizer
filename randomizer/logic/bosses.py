@@ -4,7 +4,7 @@ import collections
 import random
 import statistics
 
-from randomizer.data import bosses, enemies
+from ...randomizer.data import bosses, enemies
 from . import flags, utils
 
 
@@ -50,7 +50,7 @@ def swapPositions(list, pos1, pos2):
     list[pos1], list[pos2] = list[pos2], list[pos1]
     return list
 
-def randomize_all(world):
+def randomize_all(world, ap_data):
     """Randomize all the boss settings for the world.
 
     Args:
@@ -69,8 +69,14 @@ def randomize_all(world):
             # Check if we're doing 6 or 7 stars.
             num_stars = 7 if world.settings.is_flag_enabled(flags.SevenStarHunt) else 6
             star_bosses = random.sample(possible_stars, num_stars)
-            for boss in star_bosses:
-                boss.has_star = True
+            for boss in possible_stars:
+                if boss.name in ap_data.keys():
+                    if ap_data[boss.name] == "StarPiece":
+                        boss.has_star = True
+                else:
+                    print(ap_data)
+                    if ap_data[boss.name + "(Boss)"] == "StarPiece":
+                        boss.has_star = True
 
         # Shuffle boss encounters.
         if world.settings.is_flag_enabled(flags.BossShuffle):

@@ -3,9 +3,9 @@
 import math
 import random
 
-from randomizer.data import items, locations, chests
-from randomizer.data.keys import KeyItemLocation
-from randomizer.logic import flags, keys
+from ...randomizer.data import items, locations, chests
+from ...randomizer.data.keys import KeyItemLocation
+from ...randomizer.logic import flags, keys
 from . import utils
 
 
@@ -28,12 +28,12 @@ def _intershuffle_chests(chest_locations):
             chest.item, swap.item = swap.item, chest.item
 
 
-def randomize_all(world):
+def randomize_all(world, ap_data):
     """
 
     Args:
         world (randomizer.logic.main.GameWorld): Game world to randomize.
-
+        ap_data (dict[str, str]): Archipelago placement data.
     """
 
     # Get limitation of items allowed first
@@ -361,7 +361,7 @@ def randomize_all(world):
                 eligible_key_locations = key_item_locations + chest_locations
 
                 # Do the fill, and mark any selected chests as done.
-                keys.fill_locations(world, eligible_key_locations, required_items, extra_items)
+                keys.fill_locations(world, eligible_key_locations, required_items, extra_items, ap_data)
                 for location in eligible_key_locations:
                     if location.has_item:
                         finished_chests.append(location)

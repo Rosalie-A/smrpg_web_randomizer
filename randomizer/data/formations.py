@@ -1,7 +1,7 @@
 # Data module for enemy formation data.
 
-from randomizer.logic import utils
-from randomizer.logic.patch import Patch
+from ...randomizer.logic import utils
+from ...randomizer.logic.patch import Patch
 from . import enemies
 from .bosses import Battlefields
 

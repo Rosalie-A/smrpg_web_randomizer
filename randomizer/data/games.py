@@ -1,7 +1,7 @@
 # Data module for minigame data.
 
-from randomizer.logic import utils
-from randomizer.logic.patch import Patch
+from ...randomizer.logic import utils
+from ...randomizer.logic.patch import Patch
 
 
 # ******** Ball Solitaire

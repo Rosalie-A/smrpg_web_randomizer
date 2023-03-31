@@ -1,8 +1,8 @@
 # Data module for enemy data.
 
-from randomizer.logic import flags, utils
-from randomizer.logic.battleassembler import BattleScript
-from randomizer.logic.patch import Patch
+from ...randomizer.logic import flags, utils
+from ...randomizer.logic.battleassembler import BattleScript
+from ...randomizer.logic.patch import Patch
 from . import attacks
 from . import battlescripts
 from . import items

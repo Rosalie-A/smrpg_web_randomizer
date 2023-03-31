@@ -1,7 +1,7 @@
 # Data module for character data.
 
-from randomizer.logic import utils
-from randomizer.logic.patch import Patch
+from ...randomizer.logic import utils
+from ...randomizer.logic.patch import Patch
 
 from . import spells
 from .utils import color_to_bytes, palette_to_bytes

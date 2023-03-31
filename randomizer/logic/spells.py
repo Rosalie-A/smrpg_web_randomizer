@@ -4,8 +4,8 @@ import random
 
 from . import flags, utils
 
-from randomizer.data import enemies
-from randomizer.data import spells
+from ...randomizer.data import enemies
+from ...randomizer.data import spells
 
 
 def _randomize_spell(spell):

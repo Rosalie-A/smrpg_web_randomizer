@@ -1,7 +1,7 @@
 # Data module for dialog data.
 
-from randomizer.logic import utils
-from randomizer.logic.patch import Patch
+from ...randomizer.logic import utils
+from ...randomizer.logic.patch import Patch
 
 # This table isn't complete.
 # And some of the single char replacements should be done via string.translate,

@@ -1,7 +1,7 @@
 # Data module for chest data.
 
-from randomizer.data import items
-from randomizer.logic.utils import isclass_or_instance
+from ...randomizer.data import items
+from ...randomizer.logic.utils import isclass_or_instance
 from . import locations
 
 

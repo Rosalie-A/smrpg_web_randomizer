@@ -7,7 +7,7 @@ import re
 import binascii
 
 
-from randomizer import data
+from ...randomizer import data
 from . import bosses
 from . import bosses_overworld
 from . import credits
@@ -320,18 +320,18 @@ class GameWorld:
         """
         return self.formation_packs_dict[index]
 
-    def randomize(self):
+    def randomize(self, ap_data):
         """Randomize this entire game world instance."""
         # Seed the PRNG at the start.
         random.seed(self.seed)
 
         characters.randomize_all(self)
         spells.randomize_all(self)
-        items.randomize_all(self)
+        items.randomize_all(self, ap_data)
         enemies.randomize_all(self)
-        bosses.randomize_all(self)
-        keys.randomize_all(self)
-        chests.randomize_all(self)
+        bosses.randomize_all(self, ap_data)
+        keys.randomize_all(self, ap_data)
+        chests.randomize_all(self, ap_data)
         games.randomize_all(self)
         dialogs.randomize_all(self)
 

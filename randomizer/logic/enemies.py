@@ -3,8 +3,8 @@
 import random
 from functools import reduce
 
-from randomizer.data import bosses, enemies
-from randomizer.data.formations import FormationMember
+from ...randomizer.data import bosses, enemies
+from ...randomizer.data.formations import FormationMember
 from . import flags, utils
 
 

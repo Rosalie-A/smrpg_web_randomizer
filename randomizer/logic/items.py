@@ -5,8 +5,8 @@ import math
 
 from inspect import isclass
 
-from randomizer.data import items
-from randomizer.data.characters import Mario, Mallow, Geno, Bowser, Peach
+from ...randomizer.data import items
+from ...randomizer.data.characters import Mario, Mallow, Geno, Bowser, Peach
 from . import flags, utils
 
 
@@ -229,7 +229,7 @@ def _randomize_item(item):
                     item.status_buffs.append(i)
 
 
-def randomize_all(world):
+def randomize_all(world, ap_data):
     """Randomize everything for items for a single seed.
 
     :type world: randomizer.logic.main.GameWorld

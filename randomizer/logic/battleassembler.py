@@ -1,10 +1,10 @@
 from . import utils
 from .dialogs import allocate_string
 from .patch import Patch
-from randomizer.data import battlescripts
-from randomizer.data.attacks import EnemyAttack
-from randomizer.data.items import Item
-from randomizer.data.spells import Spell, CharacterSpell, EnemySpell
+from ...randomizer.data import battlescripts
+from ...randomizer.data.attacks import EnemyAttack
+from ...randomizer.data.items import Item
+from ...randomizer.data.spells import Spell, CharacterSpell, EnemySpell
 
 
 mem_base = 0x7EE000

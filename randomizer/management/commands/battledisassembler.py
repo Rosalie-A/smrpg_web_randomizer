@@ -1,9 +1,9 @@
 from django.core.management.base import BaseCommand
 
-from randomizer.data.battletables import Targets, targeting_table, Monsters, monsters_table
-from randomizer.data.attacks import get_default_enemy_attacks
-from randomizer.data.items import get_default_items
-from randomizer.data.spells import ChestScrow, ChestFear, ChestMute, ChestPoison, Nothing, get_default_spells
+from ...randomizer.data.battletables import Targets, targeting_table, Monsters, monsters_table
+from ...randomizer.data.attacks import get_default_enemy_attacks
+from ...randomizer.data.items import get_default_items
+from ...randomizer.data.spells import ChestScrow, ChestFear, ChestMute, ChestPoison, Nothing, get_default_spells
 
 battle_lengths = [
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,

@@ -2,8 +2,8 @@
 
 from enum import IntEnum
 
-from randomizer.logic import utils
-from randomizer.logic.patch import Patch
+from ...randomizer.logic import utils
+from ...randomizer.logic.patch import Patch
 
 
 class Battlefields(IntEnum):

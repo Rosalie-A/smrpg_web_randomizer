@@ -4,8 +4,8 @@ import collections
 import random
 import inspect
 
-from randomizer.data import characters, spells, palettes
-from randomizer.logic import flags, utils
+from ...randomizer.data import characters, spells, palettes
+from ...randomizer.logic import flags, utils
 
 
 # Move this to character classes instead!

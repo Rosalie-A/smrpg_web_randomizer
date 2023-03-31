@@ -3,9 +3,9 @@
 from enum import Enum, auto
 from inspect import isclass
 
-from randomizer.data import items
-from randomizer.logic import utils
-from randomizer.logic.patch import Patch
+from ...randomizer.data import items
+from ...randomizer.logic import utils
+from ...randomizer.logic.patch import Patch
 
 
 class Area(Enum):

@@ -3,9 +3,9 @@
 import inspect
 import random
 
-from randomizer import data
-from randomizer.logic import flags
-from randomizer.logic.patch import Patch
+from ...randomizer import data
+from ...randomizer.logic import flags
+from ...randomizer.logic.patch import Patch
 
 
 def patch_bowser_doors(world):

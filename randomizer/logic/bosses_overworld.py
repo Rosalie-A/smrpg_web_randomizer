@@ -17,9 +17,9 @@ import re
 import binascii
 import math
 
-from randomizer import data
-from randomizer.logic import flags
-from randomizer.logic.patch import Patch
+from ...randomizer import data
+from ...randomizer.logic import flags
+from ...randomizer.logic.patch import Patch
 
 from functools import wraps
 

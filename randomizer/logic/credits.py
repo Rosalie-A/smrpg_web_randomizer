@@ -1,8 +1,8 @@
 import random
 
-from randomizer.logic import utils
-from randomizer.logic.dialogs import allocate_string
-from randomizer.logic.patch import Patch
+from ...randomizer.logic import utils
+from ...randomizer.logic.dialogs import allocate_string
+from ...randomizer.logic.patch import Patch
 
 
 '''

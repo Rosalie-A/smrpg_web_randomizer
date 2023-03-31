@@ -4,7 +4,7 @@ import random
 from django.core.management.base import BaseCommand
 from .generatesample import ALL_FLAGS
 
-from randomizer.logic.main import GameWorld, Settings
+from ....randomizer.logic.main import GameWorld, Settings
 
 
 class Command(BaseCommand):
@@ -45,13 +45,13 @@ class Command(BaseCommand):
 
         self.stdout.write("Generating seed: {}".format(seed))
         world = GameWorld(seed, settings)
-
-        world.randomize()
+        ap_data = self.build_ap_data(options["ap_data"], world)
+        world.randomize(ap_data)
 
         patch = world.build_patch()
 
         rom = bytearray(open(options['rom'], 'rb').read())
-        base_patch = json.load(open('randomizer/static/randomizer/patches/open_mode.json'))
+        base_patch = json.load(open('worlds/smrpg/smrpg_web_randomizer/randomizer/static/randomizer/patches/open_mode.json'))
         for ele in base_patch:
             key = list(ele)[0]
             bytes = ele[key]
@@ -77,3 +77,57 @@ class Command(BaseCommand):
         spoiler_fname = options['output_file'] + '.spoiler'
         json.dump(world.spoiler, open(spoiler_fname, 'w'))
         self.stdout.write("Wrote spoiler file: {}".format(spoiler_fname))
+
+    def build_ap_data(self, ap_data, world):
+        from ...data.items import get_default_items, RecoveryMushroom, Flower, YouMissed,\
+            Coins5, Coins8, Coins10, Coins50, Coins100, Coins150, FrogCoin
+        from ...data.keys import get_default_key_item_locations
+        from ...data.chests import get_default_chests
+        from ...data.bosses import get_default_boss_locations
+        items = {item.name: item for item in get_default_items(world)}
+        chests = [*get_default_chests(world), *get_default_key_item_locations(world), *get_default_boss_locations(world)]
+        new_ap_data = dict()
+        for chest in chests:
+            chest.item = None
+            if chest.name in ap_data.keys():
+                item_name = ap_data[chest.name]
+                if "Coins" in item_name:
+                    if item_name == "FiveCoins":
+                        new_ap_data[chest.name] = Coins5(world)
+                    if item_name == "EightCoins":
+                        new_ap_data[chest.name] = Coins8(world)
+                    if item_name == "TenCoins":
+                        new_ap_data[chest.name] = Coins10(world)
+                    if item_name == "FiftyCoins":
+                        new_ap_data[chest.name] = Coins50(world)
+                    if item_name == "OneHundredCoins":
+                        new_ap_data[chest.name] = Coins100(world)
+                    if item_name == "OneHundredFiftyCoins":
+                        new_ap_data[chest.name] = Coins150(world)
+                elif item_name == "FrogCoin":
+                    new_ap_data[chest.name] = FrogCoin(world)
+                elif item_name == "RecoveryMushroom":
+                    new_ap_data[chest.name] = RecoveryMushroom(world)
+                elif item_name == "YouMissed!":
+                    new_ap_data[chest.name] = YouMissed(world)
+                elif item_name == "ArchipelagoItem":
+                    new_ap_data[chest.name] = Flower(world)
+                elif item_name == "Flower":
+                    new_ap_data[chest.name] = Flower(world)
+                elif item_name in items.keys():
+                    item = items[item_name]
+                    new_ap_data[chest.name] = item
+                elif item_name == "Defeated!" or item_name == "StarPiece":
+                    item = item_name
+                    new_ap_data[chest.name] = item
+                else:
+                    print(item_name)
+                    raise RuntimeError()
+            elif chest.name + "(Boss)" in ap_data.keys():
+                item_name = ap_data[chest.name + "(Boss)"]
+                if item_name == "Defeated!" or item_name == "StarPiece":
+                    item = item_name
+                    new_ap_data[chest.name + "(Boss)"] = item
+        return new_ap_data
+
+

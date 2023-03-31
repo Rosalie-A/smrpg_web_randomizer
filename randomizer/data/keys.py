@@ -2,7 +2,7 @@
 
 from . import items
 from . import locations
-from randomizer.logic import utils
+from ...randomizer.logic import utils
 
 
 class KeyItemLocation(locations.ItemLocation):

@@ -1,6 +1,6 @@
 import random
 
-from randomizer.data import dialogs
+from ...randomizer.data import dialogs
 from . import flags
 
 

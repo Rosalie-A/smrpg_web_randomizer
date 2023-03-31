@@ -4,8 +4,8 @@ import enum
 import random
 import math
 
-from randomizer.logic import utils
-from randomizer.logic.patch import Patch
+from ...randomizer.logic import utils
+from ...randomizer.logic.patch import Patch
 from .characters import Mario, Mallow, Geno, Bowser, Peach
 
 

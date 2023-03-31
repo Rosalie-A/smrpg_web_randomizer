@@ -6,11 +6,11 @@ import time
 
 from django.core.management.base import BaseCommand
 
-from randomizer.data.bosses import StarLocation
-from randomizer.data.keys import get_default_key_item_locations
-from randomizer.data.items import Item
-from randomizer.logic.flags import CATEGORIES
-from randomizer.logic.main import GameWorld, Settings, VERSION
+from ....randomizer.data.bosses import StarLocation
+from ....randomizer.data.keys import get_default_key_item_locations
+from ....randomizer.data.items import Item
+from ....randomizer.logic.flags import CATEGORIES
+from ....randomizer.logic.main import GameWorld, Settings, VERSION
 
 # Flag string for all flags at max level.
 ALL_FLAGS = []

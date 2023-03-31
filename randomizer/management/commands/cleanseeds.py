@@ -2,8 +2,8 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.db.models import Q
 
-from randomizer.logic.main import VERSION
-from randomizer.models import Seed
+from ...randomizer.logic.main import VERSION
+from ...randomizer.models import Seed
 
 
 class Command(BaseCommand):
