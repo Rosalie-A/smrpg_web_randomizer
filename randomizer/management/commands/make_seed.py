@@ -66,6 +66,8 @@ class Command(BaseCommand):
                 rom[addr] = byte
                 addr += 1
 
+        rom[0x7FC0:0x7FD4] = options["rom_name"]
+
         checksum = sum(rom) & 0xFFFF
         rom[0x7FDC] = (checksum ^ 0xFFFF) & 0xFF
         rom[0x7FDD] = (checksum ^ 0xFFFF) >> 8
