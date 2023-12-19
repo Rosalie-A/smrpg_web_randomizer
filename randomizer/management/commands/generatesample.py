@@ -4,8 +4,6 @@ import datetime
 import random
 import time
 
-from django.core.management.base import BaseCommand
-
 from ....randomizer.data.bosses import StarLocation
 from ....randomizer.data.keys import get_default_key_item_locations
 from ....randomizer.data.items import Item
@@ -39,7 +37,7 @@ for category in CATEGORIES:
 ALL_FLAGS = ' '.join(ALL_FLAGS)
 
 
-class Command(BaseCommand):
+class Command():
     help = 'Generate a statistical sampling of seeds to compare randomization spreads.'
 
     def add_arguments(self, parser):
@@ -65,15 +63,15 @@ class Command(BaseCommand):
         sysrand = random.SystemRandom()
         start = time.time()
 
-        self.stdout.write("Generating {} samples of version {}, {} mode, flags {!r}".format(
+        print("Generating {} samples of version {}, {} mode, flags {!r}".format(
             options['samples'], VERSION, options['mode'], options['flags']))
 
         stars_file = '{}_stars.csv'.format(options['output_file'])
-        self.stdout.write("Star Locations: {}".format(stars_file))
+        print("Star Locations: {}".format(stars_file))
         star_stats = {}
 
         key_items_file = '{}_key_items.csv'.format(options['output_file'])
-        self.stdout.write("Key Item Locations: {}".format(key_items_file))
+        print("Key Item Locations: {}".format(key_items_file))
         key_item_stats = {}
 
         settings = Settings(options['mode'], flag_string=options['flags'])
@@ -86,9 +84,9 @@ class Command(BaseCommand):
                 world.randomize()
             except Exception:
                 elapsed = int(round(time.time() - start))
-                self.stdout.write("Generated {} samples, elapsed time {}".format(
+                print("Generated {} samples, elapsed time {}".format(
                     i, datetime.timedelta(seconds=elapsed)))
-                self.stdout.write("ERROR generating seed {}".format(world.seed))
+                print("ERROR generating seed {}".format(world.seed))
                 raise
 
             # Record star piece shuffle stats.
@@ -110,11 +108,11 @@ class Command(BaseCommand):
             num_gen = i + 1
             if num_gen % 10 == 0 or num_gen == options['samples']:
                 elapsed = int(round(time.time() - start))
-                self.stdout.write("Generated {} samples, elapsed time {}".format(
+                print("Generated {} samples, elapsed time {}".format(
                     num_gen, datetime.timedelta(seconds=elapsed)), ending='\r')
 
         # Blank line for newline.
-        self.stdout.write('')
+        print('')
 
         # Write star piece shuffle stats.
         with open(stars_file, 'w') as f:

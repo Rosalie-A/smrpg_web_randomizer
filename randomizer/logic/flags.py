@@ -1,8 +1,5 @@
 # Flag definitions and logic.
 
-from django.utils.html import mark_safe
-from markdown import markdown
-
 
 # ************************************** Flag classes
 
@@ -23,25 +20,25 @@ class Flag:
 
     @classmethod
     def description_as_markdown(cls):
-        return mark_safe(markdown(cls.description, safe_mode='escape'))
+        return cls.description
 
     @classmethod
     def description_or_name_as_markdown(cls):
         if cls.description:
-            return mark_safe(markdown(cls.description, safe_mode='escape'))
+            return cls.description
         else:
-            return mark_safe(markdown(cls.name, safe_mode='escape'))
+            return cls.name
 
     @classmethod
     def inverse_description_as_markdown(cls):
-        return mark_safe(markdown(cls.inverse_description, safe_mode='escape'))
+        return cls.inverse_description
 
     @classmethod
     def inverse_description_or_name_as_markdown(cls):
         if cls.inverse_description:
-            return mark_safe(markdown(cls.inverse_description, safe_mode='escape'))
+            return cls.inverse_description
         else:
-            return mark_safe(markdown("(" + cls.name + ")", safe_mode='escape'))
+            return "(" + cls.name + ")"
 
     @classmethod
     def available_in_mode(cls, mode):

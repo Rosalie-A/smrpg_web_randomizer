@@ -1,5 +1,3 @@
-from django.core.serializers.json import DjangoJSONEncoder
-
 
 class Patch:
     """Class representing a patch for a specific seed that can be added to as we build it."""
@@ -91,7 +89,7 @@ class Patch:
         return patch
 
 
-class PatchJSONEncoder(DjangoJSONEncoder):
+class PatchJSONEncoder():
     """Extension of the Django JSON serializer to support randomizer patch data."""
 
     def default(self, o):

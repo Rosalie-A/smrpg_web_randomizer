@@ -792,7 +792,7 @@ class GameWorld:
             title = title[:19] + '?'
 
         # Add version number on name entry screen.
-        version_text = ('v' + VERSION).ljust(10)
+        version_text = ('v' + VERSION + " AP").ljust(10)
         if len(version_text) > 10:
             raise ValueError("Version text is too long: {!r}".format(version_text))
         patch.add_data(0x3ef140, version_text)
