@@ -45,7 +45,6 @@ class Command():
             seed = r.getrandbits(32)
             del r
 
-        print("Generating seed: {}".format(seed))
         world = GameWorld(seed, settings)
         ap_data = self.build_ap_data(options["ap_data"], world)
         world.randomize(ap_data)
@@ -77,10 +76,8 @@ class Command():
         rom[0x7FDF] = checksum >> 8
 
         open(options['output_file'], 'wb').write(rom)
-        print("Wrote output file: {}".format(options['output_file']))
         spoiler_fname = options['output_file'] + '.spoiler'
         json.dump(world.spoiler, open(spoiler_fname, 'w'))
-        print("Wrote spoiler file: {}".format(spoiler_fname))
 
     def build_ap_data(self, ap_data, world):
         from ...data.items import get_default_items, RecoveryMushroom, Flower, YouMissed, \

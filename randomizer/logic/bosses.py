@@ -74,7 +74,6 @@ def randomize_all(world, ap_data):
                     if ap_data[boss.name] == "StarPiece":
                         boss.has_star = True
                 else:
-                    print(ap_data)
                     if ap_data[boss.name + "(Boss)"] == "StarPiece":
                         boss.has_star = True
 
