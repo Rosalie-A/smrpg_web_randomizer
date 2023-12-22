@@ -365,6 +365,10 @@ class BossShuffle(Flag):
 
 # ******** Chest shuffle flags
 
+class ChestArchipelago(Flag):
+    name = "Archipelago provides the items."
+    description = "You shouldn't see this."
+    value = 'Ta'
 
 class ChestTier1(Flag):
     name = "Restrict to worst items"
@@ -544,6 +548,7 @@ class ChestShuffleChaos(Flag):
     description = "Any chest or sidequest reward may contain anything."
     value = 'Tc'
     choices = [
+        ChestArchipelago,
         ChestTier4,
         ChestTier3,
         ChestTier2,

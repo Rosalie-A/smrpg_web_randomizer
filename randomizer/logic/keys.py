@@ -167,6 +167,7 @@ def randomize_all(world, ap_data):
 
             # Fill in locations.
             fill_locations(world, locations_to_fill, required_items, extra_items, ap_data=ap_data)
+            pass
 
 
 def fill_locations(world, locations_to_fill, required_items, extra_items=None, ap_data=None):

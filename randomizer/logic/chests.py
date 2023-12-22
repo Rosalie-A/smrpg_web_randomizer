@@ -3,6 +3,7 @@
 import math
 import random
 
+from .keys import Inventory
 from ...randomizer.data import items, locations, chests
 from ...randomizer.data.keys import KeyItemLocation
 from ...randomizer.logic import flags, keys
@@ -79,7 +80,14 @@ def randomize_all(world, ap_data):
     # Open mode-specific shuffles.
     if world.open_mode:
         # Same area shuffle.
-        if world.settings.is_flag_enabled(flags.ChestShuffle1):
+        if world.settings.is_flag_enabled(flags.ChestArchipelago):
+            chest_locations: list = world.chest_locations + world.key_locations
+            for chest in [location for location in chest_locations if ap_data[location.name].name == "InvincibilityStar"]:
+                chest.item = random.choice([star for star in stars])
+                chest_locations.remove(chest)
+            keys.fill_locations(world, chest_locations, Inventory(), Inventory(), ap_data)
+
+        elif world.settings.is_flag_enabled(flags.ChestShuffle1):
             for area in locations.Area:
                 group = [chest for chest in world.chest_locations if chest.area == area]
                 if group:
@@ -578,6 +586,8 @@ def randomize_all(world, ap_data):
 
                     finished_chests.append(chest)
                     eligible_rewards.remove(chest)
+
+
 
         # Replace any sellable items with closest coin equivalent.
         if world.settings.is_flag_enabled(flags.ReplaceItems):
