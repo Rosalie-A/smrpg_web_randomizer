@@ -86,8 +86,10 @@ class Command():
         from ...data.chests import get_default_chests
         from ...data.bosses import get_default_boss_locations
         items = {item.name: item for item in get_default_items(world)}
-        chests = [*get_default_chests(world), *get_default_key_item_locations(world),
-                  *get_default_boss_locations(world)]
+        boxes = [*get_default_chests(world)]
+        keys = [*get_default_key_item_locations(world)]
+        bosses = [*get_default_boss_locations(world)]
+        chests = [*boxes, *keys, *bosses]
         new_ap_data = dict()
         for chest in chests:
             chest.item = None
@@ -115,7 +117,13 @@ class Command():
                 elif item_name == "InvincibilityStar":
                     new_ap_data[chest.name] = InvincibilityStar(world)
                 elif item_name == "ArchipelagoItem":
-                    new_ap_data[chest.name] = Mushroom2(world)
+                    if chest in boxes:
+                        if chest.item_allowed(Flower(world)):
+                            new_ap_data[chest.name] = Flower(world)
+                        else:
+                            new_ap_data[chest.name] = Mushroom2(world)
+                    else:
+                        new_ap_data[chest.name] = Mushroom2(world)
                 elif item_name == "Flower":
                     new_ap_data[chest.name] = Flower(world)
                 elif item_name in items.keys():
